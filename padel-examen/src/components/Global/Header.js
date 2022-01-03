@@ -9,13 +9,13 @@ function Header() {
 
   const [offset, setOffset] = useState(0);
 
-  var nav = document.querySelector('nav');
+  let nav = document.querySelector('nav');
 
   window.addEventListener('scroll', function () {
-    if (window.pageYOffset > 100) {
-      nav.classList.add('bg-dark', 'shadow');
+    if (window.pageYOffset > 150) {
+      nav.classList.add('bg-success', 'shadow');
     } else {
-      nav.classList.remove('bg-dark', 'shadow');
+      nav.classList.remove('bg-success', 'shadow');
     }
   });
 
