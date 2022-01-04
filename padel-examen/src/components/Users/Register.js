@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import register from '../register.css'
+import register from '../register.css';
+import server from '../Global/Server';
 
 function Register() {
 
     const navigate = useNavigate();
     const [error, setError] = React.useState(false);
     const [togglePanel, setTogglePanel] = useState('f-container');
+    const [jwt, setJwt] = useState();
 
     const css =
     `
@@ -96,7 +98,7 @@ function toggleSign() {
 
 
 
-    const handleSubmit = (event) => {
+    const handleSubmitReg = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
 
@@ -119,9 +121,38 @@ function toggleSign() {
         console.log(showError)
     };
 
-    function showError(e) {
-        setError(true);
-    }
+ 
+
+    const handleSubmitSign = (event) => {
+      event.preventDefault();
+      const data = new FormData(event.currentTarget);
+
+      axios.post(`${server}/api/auth/local`, {
+          identifier: data.get('identifier'),
+          password: data.get('Lösenord')
+      })
+      .then((resp) => {
+        localStorage.setItem('firstname', resp.data.user.Firstname);
+        localStorage.setItem('jwt', resp.data.jwt);
+        localStorage.setItem('user_id', resp.data.user.id);
+        localStorage.setItem('username', resp.data.user.username);
+           navigate("/");
+           window.location.reload();
+          console.log(resp)
+      })
+      .catch(showError)
+      console.log(showError)
+  };
+
+  function showError(e) {
+    setError(true);
+}
+
+useEffect(() => {
+  const JWT = localStorage.getItem("jwt");
+  setJwt(JWT);
+  console.log(JWT)
+}, []);
 
     
 
@@ -137,7 +168,7 @@ function toggleSign() {
 
 <div className={togglePanel} id="f-container">
       <div className="form-container sign-up-container">
-        <form className="formReg" onSubmit={handleSubmit}>
+        <form className="formReg" onSubmit={handleSubmitReg}>
           <h1 className="headingNr1 pt-1">Registrera dig</h1>
           <div className="social-container">
             {/* <a href="#" className="social"><i className="fab fa-instagram"></i></a>
@@ -154,16 +185,16 @@ function toggleSign() {
         </form>
       </div>
       <div className="form-container sign-in-container">
-        <form className="formReg">
+        <form className="formReg" onSubmit={handleSubmitSign}>
           <h1 className="headingNr1">Logga In</h1>
           <div className="social-container">
             {/* none för tillfället */}
           </div>
           <span className="spanNr1">Med de uppgifter när du skapade ditt konto</span>
-          <input className="inputReg" type="email" placeholder="Email" />
-          <input className="inputReg" type="password" placeholder="Lösenord" />
+          <input className="inputReg" name="identifier" type="email" placeholder="Email" id="identifier" />
+          <input className="inputReg" name="Lösenord" type="password" placeholder="Lösenord" id="password" />
           <a href="#">Glömt ditt lösenord?</a>
-          <button className="regSignBTN" onClick={toggleReg}>Logga in</button>
+          <button className="regSignBTN" >Logga in</button>
         </form>
       </div>
       <div className="overlay-container">
