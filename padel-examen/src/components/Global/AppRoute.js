@@ -8,6 +8,7 @@ import LandingPage from '../LandingPage';
 import Register from '../Users/Register';
 
 
+
 function AppRoute() {
     return (
        <>
@@ -18,6 +19,7 @@ function AppRoute() {
        <Route exact path="/" element={<LandingPage />} />
        <Route exact path="Registrera" element={<Register />} />
        </Routes>
+
        </BrowserRouter>
        </>
     )

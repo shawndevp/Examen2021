@@ -78,3 +78,4 @@ npm install bootstrap
 npm i jquery
 npm i bootstrap-icons
 npm install jquery popper.js
+npm i react-google-maps
