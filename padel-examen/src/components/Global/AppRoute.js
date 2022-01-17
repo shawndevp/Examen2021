@@ -6,6 +6,8 @@ import 'bootstrap/dist/css/bootstrap.css';
 import Header from './Header';
 import LandingPage from '../LandingPage';
 import Register from '../Users/Register';
+import Profile from '../Users/Profile';
+import ProfileInfo from '../Users/ProfileInfo';
 
 
 
@@ -18,6 +20,7 @@ function AppRoute() {
 
        <Route exact path="/" element={<LandingPage />} />
        <Route exact path="Registrera" element={<Register />} />
+       <Route exact path="Profil" element={<ProfileInfo />} />
        </Routes>
 
        </BrowserRouter>
