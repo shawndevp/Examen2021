@@ -68,7 +68,21 @@
       "required": true
     },
     "Lastname": {
+      "type": "string",
+      "required": true
+    },
+    "City": {
+      "type": "string",
+      "required": false
+    },
+    "Country": {
       "type": "string"
+    },
+    "Adress": {
+      "type": "string"
+    },
+    "Zip": {
+      "type": "integer"
     }
   }
 }

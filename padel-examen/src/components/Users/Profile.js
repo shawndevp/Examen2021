@@ -1,13 +1,21 @@
 import React, {useState, useEffect} from 'react'
+import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import style from '../style.css';
 import server from '../Global/Server';
+import Modal from "react-bootstrap/Modal";
+import 'bootstrap/dist/js/bootstrap.bundle.min';
+
 
 function Profile({
  username,
  email,
  firstname,
  lastname,
+ adress,
+ country,
+ city,
+ zip,
  created
 })
 
@@ -17,6 +25,9 @@ function Profile({
 
     const userId = localStorage.getItem('user_id');
     const splitCreated = created.split('T');
+    const [token] = useState(localStorage.getItem("jwt"));
+    const navigate = useNavigate();
+    const [modalShow, setModalShow] = React.useState(false);
 
     const useGetProfileInfo = () => {
         const [userInfo, setUserInfo] = useState([]);
@@ -51,6 +62,10 @@ function Profile({
         email: email,
         firstname: firstname,
         lastname: lastname,
+        adress: adress,
+        country: country,
+        city: city,
+        zip: zip,
         created: created
     }
 
@@ -64,6 +79,10 @@ function Profile({
             .put(`${server}/api/Users/${userId}`, {
                 Firstname: editUserValue.firstname,
                 Lastname: editUserValue.lastname,
+                Adress: editUserValue.adress,
+                Country: editUserValue.country,
+                City: editUserValue.city,
+                Zip: editUserValue.zip,
                 email: editUserValue.email
 
             })
@@ -84,6 +103,73 @@ function Profile({
 
     }
     console.log(editUserValue.firstname)
+
+    function deleteUser(e) {
+        e.preventDefault();
+        const deletePerson = async () => {
+            const response = await axios
+            .delete(`${server}/api/Users/${userId}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+            .then(
+                // localStorage.clear(),
+                // navigate('/'),
+                // window.location.reload()
+            );
+            console.log(response);
+        };
+        deletePerson();
+    }
+
+    function MyVerticallyCenteredModal(props) {
+        return (
+          <Modal
+            {...props}
+            size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
+            backdrop="static"
+            centered
+          >
+            <Modal.Header closeButton>
+              <Modal.Title id="contained-modal-title-vcenter">
+                Du är påväg att radera ditt konto
+              </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <p>
+                <strong>Är du helt säker på att du vill radera ditt konto?</strong>
+                <br />
+                Detta kommer resultera i att ditt konto försvinner helt från
+                <br />
+                vår databas och du kommer inte att kunna återställa detta konto.
+                <br />
+                <br />∼ <i>Nacka PDL</i>
+              </p>
+            </Modal.Body>
+            <Modal.Footer
+              style={{
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <button
+                onClick={props.onHide}
+                className="btn btn-secondary"
+                type="submit"
+              >
+                <i className="bi bi-x"></i>
+                <span> Tillbaka</span>
+              </button>
+              <button className="btn btn-outline-danger" onClick={deleteUser}>
+                <i className="bi bi-person-x-fill fa-lg"></i>
+                <span> Radera</span>
+              </button>
+            </Modal.Footer>
+          </Modal>
+        );
+      }
 
 
     return (
@@ -115,7 +201,7 @@ function Profile({
                     <div className="col">
                         <div className="row align-items-center">
                             <div className="col-md-7">
-                                <h4 className="mb-1">{editUserValue.firstname}<span className='p-1'></span>{editUserValue.lastname}</h4>
+                                <h4 className="mb-1">{firstname}<span className='p-1'></span>{lastname}</h4>
                                 <p className="medium mb-3"><span className="badge badge-dark">Användarnamn: {editUserValue.username}</span></p>
                             </div>
                         </div>
@@ -146,26 +232,37 @@ function Profile({
                 <div className="form-row">
                     <div className="form-group col-md-6">
                         <label for="adress">Adress</label>
-                        <input type="text" id="adress" className="form-control" placeholder="Sveavägen 120"/>
+                        <input type="text" name="adress" id="adress" className="form-control" placeholder="Sveavägen 120" onChange={onChangeUser} value={editUserValue.adress}/>
                     </div>
                     <div className="form-group col-md-6">
-                        <label for="city">Land</label>
-                        <input type="text" id="city" className="form-control" placeholder="Sverige" />
+                        <label for="country">Land</label>
+                        <select id="country" name="country" className="form-control" onChange={onChangeUser} value={editUserValue.country}>
+                            <option selected="">Välj...</option>
+                            <option>Sverige</option>
+                        </select>
                     </div>
                 </div>
                 <div className="form-row">
                     
-                    <div className="form-group col-md-4">
+                    <div className="form-group col-md-6">
                         <label for="inputState5">Stad</label>
-                        <select id="inputState5" className="form-control">
+                        <select id="inputState5" name="city" className="form-control" onChange={onChangeUser} value={editUserValue.city}>
                             <option selected="">Välj...</option>
                             <option>Stockholm</option>
-                            <option>....</option>
+                            <option>Göteborg</option>
+                            <option>Malmö</option>
+                            <option>Uppsala</option>
+                            <option>Linköping</option>
+                            <option>Örebro</option>
+                            <option>Västerås</option>
+                            <option>Norrköping</option>
+                            <option>Helsingborg</option>
+                            <option>Jönköping</option>
                         </select>
                     </div>
-                    <div className="form-group col-md-2">
+                    <div className="form-group col-md-6">
                         <label for="inputZip5">Postnr</label>
-                        <input type="text" pattern='/d*' maxlength='5' className="form-control" id="inputZip5" placeholder="123 45" />
+                        <input type="text" name="zip" pattern='/d*' maxlength='5' className="form-control" id="inputZip5" placeholder="123 45" onChange={onChangeUser} value={editUserValue.zip} />
                     </div>
                 </div>
                 <div className="form-group">
@@ -175,16 +272,26 @@ function Profile({
              
                 
                 <hr className="my-4" />
-                
-                <button type="submit" className="btn btn-primary" onClick={editUser}>Spara ändringar</button>
+
+                <button type="submit" className="btn btn-primary" onClick={editUser}>Spara inställningar</button>
                 <span className="pl-3"></span>
-                <button type="submit" className="btn btn-danger">Radera konto</button>
+                <button
+                            className="btn btn-outline-danger"
+                            onClick={() => setModalShow(true)}
+                          >
+                            <i className="bi bi-person-x-fill fa-lg"></i>
+                            <span> Radera konto</span>
+                          </button>
             </form>
         </div>
     </div>
 </div>
 
 </div>
+<MyVerticallyCenteredModal
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+        />
         </>
     )
 }

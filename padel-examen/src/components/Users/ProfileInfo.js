@@ -50,6 +50,10 @@ function ProfileInfo() {
             email={userInfo.email}
             firstname={userInfo.Firstname}
             lastname={userInfo.Lastname}
+            adress={userInfo.Adress}
+            country={userInfo.Country}
+            city={userInfo.City}
+            zip={userInfo.Zip}
             created={userInfo.createdAt}
           />
 
