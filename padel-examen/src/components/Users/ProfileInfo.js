@@ -55,6 +55,8 @@ function ProfileInfo() {
             city={userInfo.City}
             zip={userInfo.Zip}
             created={userInfo.createdAt}
+            profilepicture={userInfo.Profilepicture}
+            
           />
 
       :<> </>}

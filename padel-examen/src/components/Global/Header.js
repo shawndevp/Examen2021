@@ -33,7 +33,13 @@ function Header() {
 
     <nav className="navbar fixed-top navbar-expand-lg navbar-dark p-md-3">
       <div className="container">
-        <a className="navbar-brand" href="#">Nacka PDL</a>
+        <Link
+                to="/"
+                className="navbar-brand"
+                role="button"
+              >
+                Nacka PDL
+              </Link>
         <button
           className="navbar-toggler"
           type="button"
@@ -50,19 +56,49 @@ function Header() {
           <div className="mx-auto"></div>
           <ul className="navbar-nav">
             <li className="nav-item">
-              <a className="nav-link text-white" href="#">Länk1</a>
+              <Link
+                to="#"
+                className="nav-link text-white"
+                role="button"
+              >
+                Länk1
+              </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link text-white" href="#">Länk2</a>
+            <Link
+                to="#"
+                className="nav-link text-white"
+                role="button"
+              >
+                Länk2
+              </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link text-white" href="#">Länk3</a>
+            <Link
+                to="#"
+                className="nav-link text-white"
+                role="button"
+              >
+                Länk3
+              </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link text-white" href="#">Länk3</a>
+            <Link
+                to="#"
+                className="nav-link text-white"
+                role="button"
+              >
+                Länk4
+              </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link text-white" href="#">Konto</a>
+              <Link
+                to="/Profil"
+                className="nav-link text-white"
+                role="button"
+              >
+                Konto
+              </Link>
             </li>
           </ul>
         </div>

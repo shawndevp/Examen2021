@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import style from "./style.css";
 import { Link } from "react-router-dom";
 import { GoogleMap, withScriptjs, withGoogleMap, Marker } from "react-google-maps";
@@ -32,6 +32,10 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 
 
 function LandingPage() {
+
+
+  const [token] = useState(localStorage.getItem("jwt"));
+
   return (
     <>
       <div className="runningVid">
@@ -57,9 +61,26 @@ function LandingPage() {
                 <br />
                 Padel
               </h1>
+
+              {token?
+              <Link
+                to="/Boka"
+                target="_blank"
+                role="button"
+              >
               <button type="button" class="btn btn-success btn-lg">
                 Boka Padel Tid <i class="bi-calendar-date"></i>
               </button>
+              </Link>
+                :<Link
+                to="/Registrera"
+                target="_blank"
+                role="button"
+              >
+                <button type="button" class="btn btn-success btn-lg">
+                Boka Padel Tid <i class="bi-calendar-date"></i>
+              </button>
+                </Link>}
             </div>
           </div>
         </div>

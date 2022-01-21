@@ -82,7 +82,17 @@
       "type": "string"
     },
     "Zip": {
-      "type": "integer"
+      "type": "biginteger"
+    },
+    "Profilepicture": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ]
     }
   }
 }

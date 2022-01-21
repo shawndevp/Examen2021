@@ -80,3 +80,4 @@ npm i bootstrap-icons
 npm install jquery popper.js
 npm i react-google-maps
 npm install react-bootstrap bootstrap@5.1.3
+npm install react-calendar
