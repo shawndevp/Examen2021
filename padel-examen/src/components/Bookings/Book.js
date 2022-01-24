@@ -1,35 +1,49 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
+import server from "../Global/Server";
+import axios from 'axios';
 import "react-calendar/dist/Calendar.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Available from "./Available";
 
 function Book() {
     
-  const css = `
-.calendar-test {
-    display: inline-block;
-}
-`;
 
-  const [value, onChange] = useState(new Date());
 
-  const today = new Date();
-  today.setHours(0);
-  today.setMinutes(0);
-  today.setSeconds(0);
-  today.setMilliseconds(0);
+  const useGetAvailable = () => {
+    const [bookInfo, setBookInfo] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-  function handleOnClick() {
-    return console.log("working");
+    const getDate = async () => {
+      try {
+        const response = await axios.get(`${server}/api/Availables`);
+        // for(let i = 0; i < response.data.length; i++){
+        //   setBookInfo({...bookInfo, date: response.data[i]})
+        // }
+
+        setBookInfo(response.data);
+      } catch (err) {
+        console.log(err);
+      }
+
+      setLoading(false);
+    };
+
+    useEffect(() => {
+      getDate();
+    }, []);
+
+    return {
+      bookInfo,
+      loading,
+    };
+  };
+
+  const { bookInfo, loading } = useGetAvailable();
+
+  if(!loading) {
+    console.log(bookInfo)
   }
-
-  const isDateEnabled = (date) => {
-    return date >= today;
-  };
-
-  const disableFutureDt = (current) => {
-    return current.isBefore(today);
-  };
 
   return (
     <>
@@ -38,17 +52,8 @@ function Book() {
       <br />
       <br />
 
-      <div>
-        <style>{css}</style>
-        <h1 className="text-success">🎾 Boka din tid här 🎾</h1>
-        <Calendar
-          className="calendar-test"
-          onChange={onChange}
-          onClickDay={handleOnClick}
-          minDate={today}
-          value={value}
-        />
-      </div>
+      {!loading ? <Available dates={bookInfo} /> : <></>}
+ 
     </>
   );
 }

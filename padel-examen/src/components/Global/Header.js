@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link, useNavigate, Navigate } from "react-router-dom";
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import $ from 'jquery';
 import Popper from 'popper.js';
@@ -8,11 +9,12 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';
 function Header() {
 
   const [offset, setOffset] = useState(0);
+  const [token] = useState(localStorage.getItem("jwt"));
 
   let nav = document.querySelector('nav');
 
   window.addEventListener('scroll', function () {
-    if (window.pageYOffset > 150) {
+    if (window.pageYOffset > 15) {
       nav.classList.add('bg-success', 'shadow');
     } else {
       nav.classList.remove('bg-success', 'shadow');
@@ -24,6 +26,13 @@ function Header() {
       setOffset(window.pageYOffset)
     }
   }, []);
+
+  function signOut() {
+    localStorage.clear();
+    Navigate('/');
+    window.location.reload();
+    
+  }
 
     return (
         <>
@@ -83,6 +92,16 @@ function Header() {
               </Link>
             </li>
             <li className="nav-item">
+              {token?
+                <Link
+                to="#"
+                className="nav-link text-white"
+                role="button"
+                onClick={signOut}
+              >
+                Logga ut
+              </Link>
+              :
             <Link
                 to="#"
                 className="nav-link text-white"
@@ -90,8 +109,12 @@ function Header() {
               >
                 Länk4
               </Link>
+               }
             </li>
             <li className="nav-item">
+
+              {token ?
+              
               <Link
                 to="/Profil"
                 className="nav-link text-white"
@@ -99,6 +122,15 @@ function Header() {
               >
                 Konto
               </Link>
+              :
+              <Link
+                to="/Registrera"
+                className="nav-link text-white"
+                role="button"
+              >
+                Konto
+              </Link>
+              } 
             </li>
           </ul>
         </div>

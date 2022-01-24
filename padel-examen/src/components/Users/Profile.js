@@ -59,7 +59,7 @@ const query = qs.stringify({
 
     const getProfileInfo = async () => {
       try {
-        const response = await axios.get(`${server}/api/Users/${userId}?${query}&&populate=*`);
+        const response = await axios.get(`${server}/api/Users/${userId}`);
         setUserInfo(response.data);
         console.log(response)
         // const test = await axios.get(`${server}/api/users/${query}&&populate=*`);

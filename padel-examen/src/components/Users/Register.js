@@ -121,6 +121,10 @@ function toggleSign() {
         console.log(showError)
     };
 
+    function showError(e) {
+      setError(true);
+    }
+
  
 
     const handleSubmitSign = (event) => {
@@ -181,6 +185,11 @@ useEffect(() => {
           <input className="inputReg" name="Användarnamn" type="text" placeholder="Användarnamn" id="username" />
           <input className="inputReg" name="Email" type="email" placeholder="Email" id="email" />
           <input className="inputReg" name="Lösenord" type="password" placeholder="Lösenord" id="password" />
+          {error ? (
+                    <p className="text-danger">Email eller Användarnamn <br/> är redan taget.</p>
+                  ) : (
+                    <></>
+                  )}
           <button className="regSignBTN" type="submit" value="submit" >Registrera dig</button>
         </form>
       </div>
@@ -193,7 +202,12 @@ useEffect(() => {
           <span className="spanNr1">Med de uppgifter när du skapade ditt konto</span>
           <input className="inputReg" name="identifier" type="email" placeholder="Email" id="identifier" />
           <input className="inputReg" name="Lösenord" type="password" placeholder="Lösenord" id="password" />
-          <a href="#">Glömt ditt lösenord?</a>
+          {/* <a href="#">Glömt ditt lösenord?</a> */}
+          {error ? (
+                    <p className="text-danger">Email eller Lösenord är inkorrekt.</p>
+                  ) : (
+                    <></>
+                  )}
           <button className="regSignBTN" >Logga in</button>
         </form>
       </div>
