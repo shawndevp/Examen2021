@@ -4,8 +4,10 @@ import server from "../Global/Server";
 import axios from 'axios';
 import "react-calendar/dist/Calendar.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Footer from '../Global/Footer'
 function Available({
-    dates
+    dates,
+    hasBooked
 }) {
 
 console.log(dates)
@@ -18,21 +20,34 @@ const css = `
 
 }
 
-.container .navbar-brand{
-    color: green;
+// .container .navbar-brand{
+//     color: green;
+    
+// }
+
+// .navbar-toggler  {
+//     background-color: green;
+// }
+
+// .nav-item .nav-link .text-white {
+//     color: green;
+// }
+
+body {
+    background-image: url('https://images.unsplash.com/photo-1622668459907-f1fa3113bbcf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2904&q=80');
+    background-repeat: no-repeat;
+  background-size: 100% 100%;
 }
-
-.navbar-toggler  {
-    background-color: green;
-}
-
-
 
 
 `;
 
+// setting css for <style> just for Available.js
 
+const image1 =
+    "https://images.unsplash.com/photo-1531819318554-84abdf082937?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2246&q=80";
     const [showData, setShowdata] = useState([]);
+    const userId = localStorage.getItem("user_id");
 
 
   const dateArray = [];
@@ -53,20 +68,16 @@ const css = `
         'month': splitDate[1],
         'day': splitDate[2],
         'hour': splitTime[0],
-        'minute': splitTime[1]
+        'minute': splitTime[1],
+        'id': dates.data[i].id,
+        'isBooked': dates.data[i].attributes.isBooked
     }
   
     arrayObj.push(dateObject);
 }
 
   console.log(arrayObj);
-  const [value, onChange] = useState(new Date());
 
-  const today = new Date();
-  today.setHours(0);
-  today.setMinutes(0);
-  today.setSeconds(0);
-  today.setMilliseconds(0);
 
   const valueArray = [];
   let showArray = [];
@@ -121,6 +132,12 @@ const css = `
 
   console.log(showArray)
 
+
+  
+
+ 
+
+
   const isDateEnabled = (date) => {
     return date >= today;
   };
@@ -128,12 +145,29 @@ const css = `
   const disableFutureDt = (current) => {
     return current.isBefore(today);
   };
+
+  const [value, onChange] = useState(new Date());
+
+  const today = new Date();
+  today.setHours(0);
+  today.setMinutes(0);
+  today.setSeconds(0);
+  today.setMilliseconds(0);
+
+  // Preset and adjustments for the calendar extension -> setting current date as display and not dates that have passed. 
+  
    
     return (
         <>
-             <div className="mt-5">
+        <link
+        rel="stylesheet"
+        href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+        integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
+        crossorigin="anonymous"
+      />
+             <div className="mt-5" >
              <style>{css}</style>
-        <h1 className="text-success">🎾 Boka din tid här 🎾</h1>
+        <h1 className="text-secondary"><strong>🎾 Boka din tid här 🎾</strong></h1>
         <Calendar
           className="calendar-test"
           onChange={onChange}
@@ -142,29 +176,64 @@ const css = `
           minDate={today}
           value={value}
         />
-        <h1>hello</h1>
         
-        {showData.length > 0 && showData.map((date => {
-            return(
-                <div>
-{/* // 1. Save selected date to a new state e.g. selectedDate
-
-// 2. If selectedDate isn't null, show book button */}
-               <span >{date.hour} {date.minute}</span>
+        {showData.length > 0 ? showData.map((date => {
+             function handleSubmitBooking(e) {
+                 console.log(date)
+                e.preventDefault();
+                if(hasBooked) {
+                    return(
+                        alert('Du har redan en bokad tid.')
+                    )
+                }
+                const addBooking = async () => {
+                  await axios.post(`${server}/api/Bookings`, {
+                    'data':{
+                        'users_permissions_user': userId,
+                        'available': date.id
+                    }
+                  });
+                  await axios.put(`${server}/api/Availables/${date.id}`, {
+                    'data':{
+                        'isBooked': true
+                    }
+                  });
+                  await axios.put(`${server}/api/users/${userId}`, {
+                    
+                        'hasBooked': true
+                    
+                  })
+                  .then(window.location.reload())
+                };
                 
-               
-                </div>
-            )
-        }))}
-        {/* {showArray.length !== 0 ? showArray.map((time,key)=> {
+                addBooking();
+              }
+            console.log(date.isBooked)
+              // Submit the booking of the available time that the user have selected.
+              // Function in the map to correctly specify available time and not selecting "all" available times.
+              // Put into DB isbooked -> hasBooked to prevent multiple bookings ug... 1 bookping per person.
+
+              {/* // 1. Save selected date to a new state e.g. selectedDate
+                  // 2. If selectedDate isn't null, show book button */}
+              if(date.isBooked === false) {
+
+              
             return(
-                <div>
-                    {time.hour}
+                <div className="m-3">
+               <button type="button" className="btn btn-success" onClick={handleSubmitBooking}>Boka ledig tid → {date.hour}:{date.minute}</button>
                 </div>
             )
-        }): <></> 
-        } */}
+        } else {
+            return(
+                false,
+                <div className="m-3">
+                <button type="button" className="btn btn-danger disabled" >Upptagen tid → {date.hour}:{date.minute}</button>
+                </div>
+            )
+        }
+        })) : <h4 className="text-danger pt-3">Inga tillgängliga tider 😞 </h4>}
       </div>
+      <Footer/>
         </>
     )
 }

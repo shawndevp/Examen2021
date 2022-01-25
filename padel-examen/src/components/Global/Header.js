@@ -84,43 +84,42 @@ function Header() {
             </li>
             <li className="nav-item">
             <Link
-                to="#"
+                to="/Priser"
                 className="nav-link text-white"
                 role="button"
               >
-                Länk3
+                Priser
               </Link>
             </li>
             <li className="nav-item">
               {token?
-                <Link
-                to="#"
-                className="nav-link text-white"
-                role="button"
-                onClick={signOut}
-              >
-                Logga ut
-              </Link>
+                         <Link
+                         to="/Profil"
+                         className="nav-link text-white"
+                         role="button"
+                       >
+                         Konto
+                       </Link>
               :
             <Link
-                to="#"
+                to="/Registrera"
                 className="nav-link text-white"
                 role="button"
               >
-                Länk4
+                Registrera dig
               </Link>
                }
             </li>
             <li className="nav-item">
 
               {token ?
-              
               <Link
-                to="/Profil"
-                className="nav-link text-white"
-                role="button"
+              to="#"
+              className="nav-link text-white"
+              role="button"
+              onClick={signOut}
               >
-                Konto
+              Logga ut
               </Link>
               :
               <Link
@@ -128,7 +127,7 @@ function Header() {
                 className="nav-link text-white"
                 role="button"
               >
-                Konto
+                Logga in
               </Link>
               } 
             </li>

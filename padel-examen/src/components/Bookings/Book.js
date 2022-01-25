@@ -8,19 +8,20 @@ import Available from "./Available";
 
 function Book() {
     
-
+  const userId = localStorage.getItem("user_id");
 
   const useGetAvailable = () => {
     const [bookInfo, setBookInfo] = useState([]);
     const [loading, setLoading] = useState(true);
-
+    const [userInfo, setUserInfo] = useState([]);
     const getDate = async () => {
       try {
         const response = await axios.get(`${server}/api/Availables`);
         // for(let i = 0; i < response.data.length; i++){
         //   setBookInfo({...bookInfo, date: response.data[i]})
         // }
-
+        const resp = await axios.get(`${server}/api/Users/${userId}`)
+        setUserInfo(resp.data);
         setBookInfo(response.data);
       } catch (err) {
         console.log(err);
@@ -36,13 +37,14 @@ function Book() {
     return {
       bookInfo,
       loading,
+      userInfo,
     };
   };
 
-  const { bookInfo, loading } = useGetAvailable();
+  const { bookInfo, loading, userInfo } = useGetAvailable();
 
   if(!loading) {
-    console.log(bookInfo)
+    console.log(userInfo)
   }
 
   return (
@@ -52,7 +54,7 @@ function Book() {
       <br />
       <br />
 
-      {!loading ? <Available dates={bookInfo} /> : <></>}
+      {!loading  ? <Available hasBooked ={userInfo.hasBooked} dates={bookInfo} /> : <></>}
  
     </>
   );

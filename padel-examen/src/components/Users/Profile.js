@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import style from "../style.css";
 import server from "../Global/Server";
 import Modal from "react-bootstrap/Modal";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import ChangeImg from "./ChangeImg";
+import Footer from "../Global/Footer";
 
 function Profile({
   username,
@@ -217,7 +219,8 @@ const query = qs.stringify({
             <div className="my-4">
               <ul className="nav nav-tabs mb-4" id="myTab" role="tablist">
                 <li className="nav-item">
-                  <a
+                  <Link
+                    to="/Profil"
                     className="nav-link active"
                     id="home-tab"
                     data-toggle="tab"
@@ -227,10 +230,11 @@ const query = qs.stringify({
                     aria-selected="false"
                   >
                     Profil
-                  </a>
+                  </Link>
                 </li>
                 <li className="nav-item pl-2">
-                  <a
+                  <Link
+                    to="/Bokningar"
                     className="nav-link active"
                     id="home-tab"
                     data-toggle="tab"
@@ -240,7 +244,7 @@ const query = qs.stringify({
                     aria-selected="false"
                   >
                     Bokningar
-                  </a>
+                  </Link>
                 </li>
               </ul>
               <form>
@@ -444,6 +448,7 @@ const query = qs.stringify({
         show={modalShow}
         onHide={() => setModalShow(false)}
       />
+      <Footer />
     </>
   );
 }

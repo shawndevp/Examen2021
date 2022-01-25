@@ -99,6 +99,10 @@
       "relation": "oneToOne",
       "target": "api::booking.booking",
       "inversedBy": "users_permissions_user"
+    },
+    "hasBooked": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

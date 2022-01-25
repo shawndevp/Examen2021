@@ -4,7 +4,8 @@
   "info": {
     "singularName": "available",
     "pluralName": "availables",
-    "displayName": "Available"
+    "displayName": "Available",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -19,6 +20,10 @@
       "relation": "oneToOne",
       "target": "api::booking.booking",
       "mappedBy": "available"
+    },
+    "isBooked": {
+      "type": "boolean",
+      "default": false
     }
   }
 }
