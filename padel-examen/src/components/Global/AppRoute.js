@@ -10,6 +10,7 @@ import ProfileInfo from "../Users/ProfileInfo";
 import Book from "../Bookings/Book";
 import BookingsInfo from "../Users/BookingsInfo";
 import Prices from "../Global/Prices";
+import Game from "./Game";
 
 //routing all the imported components and also external page links
 function AppRoute() {
@@ -20,6 +21,7 @@ function AppRoute() {
         <Routes>
           <Route exact path="/" element={<LandingPage />} />
           <Route exact path="/Priser" element={<Prices />} />
+          <Route exact path="/Spelet" element={<Game />} />
           <Route exact path="Registrera" element={<Register />} />
           <Route exact path="Profil" element={<ProfileInfo />} />
           <Route exact path="Bokningar" element={<BookingsInfo />} />

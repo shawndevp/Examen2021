@@ -60,13 +60,11 @@ function Footer() {
               <div class="col-xl-4 col-lg-4 mb-50">
                 <div class="footer-widget">
                   <div class="footer-logo">
-                    <a href="index.html">
                       <img
                         src="https://stromstadpadel.se/wp-content/uploads/2021/05/Stro%CC%88mstad-Padel-logo.png"
                         class="img-fluid"
                         alt="logo"
                       />
-                    </a>
                   </div>
                   <div class="footer-text">
                     <p>
@@ -102,28 +100,18 @@ function Footer() {
                       </Link>
                     </li>
                     <li>
-                      <Link to="/" role="button">
-                        Om oss
+                      <Link to="/Priser" role="button">
+                        Priser
                       </Link>
                     </li>
                     <li>
-                      <Link to="/" role="button">
-                        Personalen
+                      <Link to="/Spelet" role="button">
+                        Spelet
                       </Link>
                     </li>
                     <li>
-                      <Link to="/" role="button">
-                        Kontakt
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/" role="button">
-                        Sponsorer
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/" role="button">
-                        Tjänster
+                      <Link to="/Profil" role="button">
+                        Konto
                       </Link>
                     </li>
                   </ul>

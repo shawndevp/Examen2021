@@ -17,7 +17,6 @@ function BookingsInfo() {
         try {
           const response = await axios.get(`${server}/api/Users/${userId}`);
           setUserInfo(response.data);
-          console.log(setUserInfo(response.data))
         } catch (err) {
           console.log(err);
         }
@@ -38,10 +37,7 @@ function BookingsInfo() {
     const { userInfo, loading } = useGetProfileInfo();
   
     
-    if(!loading ) {
-      console.log(userInfo);
-    }
-    
+  
     return (
         <>
 

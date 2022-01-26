@@ -35,9 +35,9 @@ function ProfileInfo() {
   // arrow function with axios req to get the user that is registered
   const { userInfo, loading } = useGetProfileInfo();
 
-  if (!loading) {
-    console.log(userInfo);
-  }
+  // if (!loading) {
+  //   console.log(userInfo);
+  // }
   return (
     <>
       {!loading ? (

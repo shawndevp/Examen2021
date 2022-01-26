@@ -58,13 +58,8 @@ function Header() {
             <div className="mx-auto"></div>
             <ul className="navbar-nav">
               <li className="nav-item">
-                <Link to="#" className="nav-link text-white" role="button">
-                  Länk1
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link to="#" className="nav-link text-white" role="button">
-                  Länk2
+                <Link to="/Spelet" className="nav-link text-white" role="button">
+                  Spelet
                 </Link>
               </li>
               <li className="nav-item">

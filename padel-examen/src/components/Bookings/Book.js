@@ -43,10 +43,6 @@ function Book() {
 
   const { bookInfo, loading, userInfo } = useGetAvailable();
 
-  if (!loading) {
-    console.log(userInfo);
-  }
-
   // Send the props that i want to use into Available.js
   return (
     <>
