@@ -32,34 +32,30 @@ function ProfileInfo() {
       loading,
     };
   };
-
+  // arrow function with axios req to get the user that is registered
   const { userInfo, loading } = useGetProfileInfo();
 
-  
-  if(!loading ) {
+  if (!loading) {
     console.log(userInfo);
   }
   return (
     <>
-      
-      {!loading?
-
-          <Profile
-
-            username={userInfo.username}
-            email={userInfo.email}
-            firstname={userInfo.Firstname}
-            lastname={userInfo.Lastname}
-            adress={userInfo.Adress}
-            country={userInfo.Country}
-            city={userInfo.City}
-            zip={userInfo.Zip}
-            created={userInfo.createdAt}
-            profilepicture={userInfo.Profilepicture}
-            
-          />
-
-      :<> </>}
+      {!loading ? (
+        <Profile
+          username={userInfo.username}
+          email={userInfo.email}
+          firstname={userInfo.Firstname}
+          lastname={userInfo.Lastname}
+          adress={userInfo.Adress}
+          country={userInfo.Country}
+          city={userInfo.City}
+          zip={userInfo.Zip}
+          created={userInfo.createdAt}
+          profilepicture={userInfo.Profilepicture}
+        />
+      ) : (
+        <> </>
+      )}
     </>
   );
   // Mapp through props (child) we want to send to profile.js

@@ -1,10 +1,21 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+//function to transport the user to the top of the page when the user clickes on a link in the header or footer
+function scrollToTop() {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+}
+// Footer that is visibale on almost every page. etc not Register.js
 function Footer() {
   return (
     <>
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"/>
+      <link
+        rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+      />
       <link
         rel="stylesheet"
         href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
@@ -66,16 +77,17 @@ function Footer() {
                   </div>
                   <div class="footer-social-icon">
                     <span>Följ oss</span>
-                    <a href="#">
+                    <Link to="/" onClick={scrollToTop}>
                       <i class="fab fa-facebook-f facebook-bg"></i>
-                    </a>
-                    <a href="#">
+                    </Link>
+                    <Link to="/" onClick={scrollToTop}>
                       <i class="fab fa-twitter twitter-bg"></i>
-                    </a>
-                    <a href="#">
+                    </Link>
+                    <Link to="/" onClick={scrollToTop}>
                       <i class="fab fa-instagram google-bg"></i>
-                    </a>
+                    </Link>
                   </div>
+                  {/* React-Router-Dom V6 have no docs on how to redirect to external url so this will be empty for now. Have done this in V5 that is working*/}
                 </div>
               </div>
               <div class="col-xl-4 col-lg-4 col-md-6 mb-30">
@@ -147,7 +159,7 @@ function Footer() {
               <div class="col-xl-6 col-lg-6 text-center text-lg-left">
                 <div class="copyright-text">
                   <p>
-                    Copyright &copy; 2022, <a href="#">NackaPDL</a>
+                    Copyright &copy; 2022, <Link to="/">NackaPDL</Link>
                   </p>
                 </div>
               </div>

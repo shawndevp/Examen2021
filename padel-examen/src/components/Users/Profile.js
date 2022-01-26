@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import style from "../style.css";
 import server from "../Global/Server";
 import Modal from "react-bootstrap/Modal";
 import "bootstrap/dist/js/bootstrap.bundle.min";
@@ -35,25 +34,34 @@ function Profile({
     }
   }, []);
 
-  const qs = require('qs');
-const query = qs.stringify({
-    pagination: {
-        page:1,
-        pageSize:5
-    },
-    fields: ["Firstname"]
-}, {
-  encodeValuesOnly: true,
-});
+  // const qs = require('qs');
+  // const query = qs.stringify({
+  //     filters:{
+  //         user:{
+  //             id: {
+  //               $eq:userId
+  //             }
 
+  //         }
+  //     },
+  //     pagination: {
+  //         page:1,
+  //         pageSize:5
+  //     },
+  //     fields: ['id']
+  // }, {
+  //   encodeValuesOnly: true,
+  // });
 
-
+  //!!IMPORTANT. populate & query not working to find "profilepicture" cant display the new users image thats putting in to DB. I have done this in Bookings.js which works but for some reason it does not work here in profile where i want to specify and get "profilepicture" I can altough save the image that has been uploaded but not display Strapi V4 have no docs about this issue!!
 
   const userId = localStorage.getItem("user_id");
   const splitCreated = created.split("T");
   const [token] = useState(localStorage.getItem("jwt"));
   const navigate = useNavigate();
-  const [modalShow, setModalShow] = React.useState(false);
+  const [modalShow, setModalShow] = useState(false);
+
+  // create constants for localstorage, split, navigation and toggle modal when deleting user.
 
   const useGetProfileInfo = () => {
     const [userInfo, setUserInfo] = useState([]);
@@ -63,11 +71,6 @@ const query = qs.stringify({
       try {
         const response = await axios.get(`${server}/api/Users/${userId}`);
         setUserInfo(response.data);
-        console.log(response)
-        // const test = await axios.get(`${server}/api/users/${query}&&populate=*`);
-        // console.log(test)
-        // const imgResp = await axios.get(`${server}/api/upload/files/${}`);
-        // console.log(response.data);
       } catch (err) {
         console.log(err);
       }
@@ -84,6 +87,8 @@ const query = qs.stringify({
       loading,
     };
   };
+
+  // arrow function with axios req to get the user that is registered
 
   const { userInfo, loading } = useGetProfileInfo();
 
@@ -107,16 +112,17 @@ const query = qs.stringify({
     e.preventDefault();
 
     const editUserValues = async () => {
-      await axios.put(`${server}/api/Users/${userId}`, {
-        Firstname: editUserValue.firstname,
-        Lastname: editUserValue.lastname,
-        Adress: editUserValue.adress,
-        Country: editUserValue.country,
-        City: editUserValue.city,
-        Zip: editUserValue.zip,
-        email: editUserValue.email,
-      });
-      // .then(window.location.reload());
+      await axios
+        .put(`${server}/api/Users/${userId}`, {
+          Firstname: editUserValue.firstname,
+          Lastname: editUserValue.lastname,
+          Adress: editUserValue.adress,
+          Country: editUserValue.country,
+          City: editUserValue.city,
+          Zip: editUserValue.zip,
+          email: editUserValue.email,
+        })
+        .then(window.location.reload());
     };
     editUserValues();
   }
@@ -132,7 +138,6 @@ const query = qs.stringify({
       [e.target.name]: capitalizeFirstLetter(e.target.value),
     });
   }
-  console.log(editUserValue.firstname);
 
   // Function to mark the correct values so that it aggres with whats been written in.
 
@@ -200,7 +205,7 @@ const query = qs.stringify({
       </Modal>
     );
   }
-  // Modal function when clickling "Radera konto"
+  // Modal function when clickling "Radera konto" to toggle. Done with react-bootstrap/modal.
 
   return (
     <>
@@ -261,7 +266,7 @@ const query = qs.stringify({
                     </div>
                   </div>
                   <div className="col">
-                    <div className="row align-items-center">
+                    <div className="">
                       <div className="col-md-7">
                         <h4 className="mb-1">
                           {firstname}
@@ -278,9 +283,10 @@ const query = qs.stringify({
                     <div className="row mb-4">
                       <div className="col-md-7">
                         <p className="text-muted">
-                          Lorem ipsum dolor sit amet, consectetur adipiscing
-                          elit. Mauris blandit nisl ullamcorper, rutrum metus
-                          in, congue lectus. In hac habitasse platea dictumst.
+                          NackaPDL respekterar alla användares och
+                          upphovsrättsinnehavares rättigheter. Följaktligen gör
+                          all information som visas på denna webbplats, med
+                          användarens eller upphovsrättsinnehavarens samtycke.
                         </p>
                       </div>
                       <div className="col">
@@ -396,34 +402,7 @@ const query = qs.stringify({
                     value={editUserValue.email}
                   />
                 </div>
-
                 <hr className="my-4" />
-                {/* <div className="row mb-4">
-                    <div className="col-md-6">
-                        <div className="form-group">
-                            <label for="inputPassword4">Old Password</label>
-                            <input type="password" className="form-control" id="inputPassword5" />
-                        </div>
-                        <div className="form-group">
-                            <label for="inputPassword5">New Password</label>
-                            <input type="password" className="form-control" id="inputPassword5" />
-                        </div>
-                        <div className="form-group">
-                            <label for="inputPassword6">Confirm Password</label>
-                            <input type="password" className="form-control" id="inputPassword6" />
-                        </div>
-                    </div>
-                    <div className="col-md-6">
-                        <p className="mb-2">Password requirements</p>
-                        <p className="small text-muted mb-2">To create a new password, you have to meet all of the following requirements:</p>
-                        <ul className="small text-muted pl-4 mb-0">
-                            <li>Minimum 8 character</li>
-                            <li>At least one special character</li>
-                            <li>At least one number</li>
-                            <li>Can’t be the same as a previous password</li>
-                        </ul>
-                    </div>
-                </div> */}
                 <button
                   type="submit"
                   className="btn btn-success"

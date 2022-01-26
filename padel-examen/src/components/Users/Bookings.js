@@ -70,10 +70,6 @@ function Bookings({
         const response = await axios.get(`${server}/api/Bookings?${query}&&populate=*`);
         setUserInfo(response.data);
         console.log(response)
-        // const test = await axios.get(`${server}/api/users/${query}&&populate=*`);
-        // console.log(test)
-        // const imgResp = await axios.get(`${server}/api/upload/files/${}`);
-        // console.log(response.data);
       } catch (err) {
         console.log(err);
       }
@@ -128,8 +124,12 @@ function Bookings({
 
   // Delete user function -> clear localstorage -> send user to the login/signup page.
   if(!loading) {
-      const getDate = userInfo.data[0].attributes.available.data.attributes.Date
+      const getDate = userInfo.data[0].attributes.available.data.attributes.Date.split('T')
+      const getSplitZ = getDate[1].split('Z')
+      const getSplitZ1 = getDate[0].split('00')
       console.log(getDate)
+      console.log(getSplitZ)
+      console.log(getSplitZ1)
   }
     return (
         
@@ -146,7 +146,6 @@ function Bookings({
         <div className="row justify-content-center pt-5">
           <div className="col-12 col-lg-10 col-xl-8 mx-auto">
             <h2 className="h3 mb-4 page-title">Dina bokningar</h2>
-            {/* <p>{!loading?userInfo.Firstname:<></>}</p> */}
             <div className="my-4">
               <ul className="nav nav-tabs mb-4" id="myTab" role="tablist">
                 <li className="nav-item">
@@ -209,9 +208,10 @@ function Bookings({
                     <div className="row mb-4">
                       <div className="col-md-7">
                         <p className="text-muted">
-                          Lorem ipsum dolor sit amet, consectetur adipiscing
-                          elit. Mauris blandit nisl ullamcorper, rutrum metus
-                          in, congue lectus. In hac habitasse platea dictumst.
+                        NackaPDL respekterar alla användares och
+                          upphovsrättsinnehavares rättigheter. Följaktligen gör
+                          all information som visas på denna webbplats, med
+                          användarens eller upphovsrättsinnehavarens samtycke.
                         </p>
                       </div>
                       <div className="col">
