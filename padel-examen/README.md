@@ -81,3 +81,25 @@ npm install jquery popper.js
 npm i react-google-maps
 npm install react-bootstrap bootstrap@5.1.3
 npm install react-calendar
+
+
+### Manual for Admin ###
+
+Since you now have access to this site you need to know how to put new dates and times in to the calendar.
+You will need to start the padel-examen via terminal -> npm start
+Then Start the examen-strapi -> npm run develop.
+Now you have access as a admin.
+Don't forget to create a user.
+localhost:1337
+Login with 
+
+Email : Shawn.ornerstedt99@hotmail.com
+Password : Lolzzz123
+
+Now you are in the backend. 
+If you click on the left panel to -> Content Manager -> Available 
+There you will se on the right top corner it says " + Add new entry " 
+Click there and select a date and Time you want to put in to the calendar.
+isBooked shall always be OFF as standard when creating a new time.
+Click save if satisfied, Then click "Publish" to the left of "Save"
+Now the time should be available in the Calendar, ready to be booked.  
